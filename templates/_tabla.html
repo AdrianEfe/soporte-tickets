@@ -1,0 +1,15 @@
+{# Tabla genérica: recibe una lista de nombres de columnas y una lista de filas #}
+{% macro tabla(columnas, filas) %}
+<table>
+    <thead>
+        <tr>{% for col in columnas %}<th>{{ col }}</th>{% endfor %}</tr>
+    </thead>
+    <tbody>
+    {% for fila in filas %}
+        <tr>{% for valor in fila %}<td>{{ "NULL" if valor is none else valor }}</td>{% endfor %}</tr>
+    {% else %}
+        <tr><td colspan="{{ columnas|length or 1 }}">Sin resultados.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}

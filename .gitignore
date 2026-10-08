@@ -1,0 +1,7 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+soporte.db
+GUIA_ESTUDIO.txt
+GUIA_ESTUDIO.html

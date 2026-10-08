@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_tabla.html" import tabla %}
+{% block titulo %}Reportes SQL{% endblock %}
+{% block contenido %}
+<h2>Reportes SQL</h2>
+<p>Cada reporte muestra la consulta que se ejecuta y su resultado.</p>
+
+{% for r in reportes %}
+<section class="reporte">
+    <h3>{{ loop.index }}. {{ r.titulo }}</h3>
+    <p class="concepto">Concepto: {{ r.concepto }}</p>
+    <pre>{{ r.sql }}</pre>
+    {{ tabla(r.columnas, r.filas) }}
+</section>
+{% endfor %}
+{% endblock %}

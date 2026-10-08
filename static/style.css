@@ -1,0 +1,98 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    background: #f4f6f9;
+    color: #1f2937;
+}
+
+header {
+    background: #1e3a5f;
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+}
+header h1 { margin: 0; font-size: 1.3rem; }
+nav { display: flex; flex-wrap: wrap; gap: 16px; }
+nav a { color: #cfe0f5; text-decoration: none; }
+nav a:hover { color: white; text-decoration: underline; }
+
+main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-bottom: 16px;
+    font-size: 0.92rem;
+}
+th, td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+th { background: #e8eef6; }
+tr:hover td { background: #f9fbfd; }
+
+button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+button:hover { background: #1d4ed8; }
+button.peligro { background: #dc2626; padding: 4px 10px; }
+button.peligro:hover { background: #b91c1c; }
+
+input, select, textarea {
+    font: inherit;
+    padding: 6px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.formulario { display: flex; flex-direction: column; gap: 14px; max-width: 520px; }
+.formulario label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+.formulario.en-linea { flex-direction: row; flex-wrap: wrap; max-width: none; margin-bottom: 16px; }
+
+.tarjetas { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.tarjeta {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 24px;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.tarjeta .numero { font-size: 1.8rem; font-weight: 700; color: #1e3a5f; }
+
+.filtros a { margin-right: 10px; }
+.filtros a.activo { font-weight: 700; }
+
+.estado-abierto { background: #fee2e2; }
+.estado-en-proceso { background: #fef3c7; }
+.estado-resuelto { background: #dcfce7; }
+
+.flash { padding: 10px 14px; border-radius: 6px; }
+.flash.ok { background: #dcfce7; }
+.flash.error { background: #fee2e2; }
+
+.reporte { margin-bottom: 36px; }
+.concepto { color: #4b5563; font-style: italic; }
+pre, textarea.sql {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: Consolas, monospace;
+    font-size: 0.88rem;
+    overflow-x: auto;
+}
+textarea.sql { width: 100%; display: block; margin-bottom: 10px; }
+
+.nowrap { white-space: nowrap; }

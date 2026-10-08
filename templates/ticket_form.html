@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block titulo %}Nuevo ticket{% endblock %}
+{% block contenido %}
+<h2>Nuevo ticket</h2>
+
+<form method="post" class="formulario">
+    <label>Equipo
+        <select name="equipo_id" required>
+            <option value="">— Elegir —</option>
+            {% for e in equipos %}
+                <option value="{{ e.id }}">{{ e.nombre }} — {{ e.tipo }} {{ e.marca }} {{ e.modelo or "" }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>Técnico asignado
+        <select name="tecnico_id">
+            <option value="">(sin asignar)</option>
+            {% for t in tecnicos %}
+                <option value="{{ t.id }}">{{ t.nombre }} ({{ t.especialidad }})</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>Problema
+        <textarea name="problema" rows="3" required></textarea>
+    </label>
+
+    <label>Costo estimado ($)
+        <input type="number" name="costo" min="0" step="50" value="0">
+    </label>
+
+    <button>Crear ticket</button>
+</form>
+{% endblock %}

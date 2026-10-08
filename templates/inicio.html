@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h2>Resumen</h2>
+<div class="tarjetas">
+    {% for estado in estados %}
+    <a class="tarjeta" href="{{ url_for('tickets', estado=estado) }}">
+        <span class="numero">{{ totales.get(estado, 0) }}</span>
+        <span>{{ estado }}</span>
+    </a>
+    {% endfor %}
+    <div class="tarjeta">
+        <span class="numero">$ {{ "%.0f"|format(facturado) }}</span>
+        <span>Facturado</span>
+    </div>
+</div>
+
+<p>Sistema para gestionar órdenes de reparación de equipos informáticos:
+clientes, sus equipos, los técnicos y los tickets de cada reparación.</p>
+{% endblock %}

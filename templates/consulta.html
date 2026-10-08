@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "_tabla.html" import tabla %}
+{% block titulo %}Consulta libre{% endblock %}
+{% block contenido %}
+<h2>Consulta libre</h2>
+<p>Escribí cualquier <code>SELECT</code>. La conexión es de solo lectura: no se puede modificar la base desde acá.
+Tablas: <code>clientes</code>, <code>equipos</code>, <code>tecnicos</code>, <code>tickets</code>.</p>
+
+<form method="post">
+    <textarea name="sql" rows="8" class="sql">{{ sql }}</textarea>
+    <button>Ejecutar</button>
+</form>
+
+{% if error %}
+    <p class="flash error">Error: {{ error }}</p>
+{% elif columnas %}
+    <p>{{ filas|length }} fila(s).</p>
+    {{ tabla(columnas, filas) }}
+{% endif %}
+{% endblock %}

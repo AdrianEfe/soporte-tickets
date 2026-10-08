@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}Clientes{% endblock %}
+{% block contenido %}
+<h2>Clientes</h2>
+
+<form method="post" class="formulario en-linea">
+    <input name="nombre" placeholder="Nombre" required>
+    <input name="telefono" placeholder="Teléfono">
+    <input name="email" type="email" placeholder="Email">
+    <button>Agregar cliente</button>
+</form>
+
+<table>
+    <thead>
+        <tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Email</th></tr>
+    </thead>
+    <tbody>
+    {% for c in clientes %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.telefono or "—" }}</td>
+            <td>{{ c.email or "—" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

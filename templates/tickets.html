@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Tickets{% endblock %}
+{% block contenido %}
+<h2>Tickets</h2>
+
+<p class="filtros">
+    Filtrar:
+    <a href="{{ url_for('tickets') }}" class="{{ 'activo' if not estado_actual }}">Todos</a>
+    {% for estado in estados %}
+        <a href="{{ url_for('tickets', estado=estado) }}" class="{{ 'activo' if estado == estado_actual }}">{{ estado }}</a>
+    {% endfor %}
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th><th>Ingreso</th><th>Cliente</th><th>Equipo</th>
+            <th>Problema</th><th>Técnico</th><th>Costo</th><th>Estado</th><th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for t in tickets %}
+        <tr>
+            <td>{{ t.id }}</td>
+            <td class="nowrap">{{ t.fecha_ingreso }}</td>
+            <td>{{ t.cliente }}</td>
+            <td>{{ t.tipo }} {{ t.marca }} {{ t.modelo or "" }}</td>
+            <td>{{ t.problema }}</td>
+            <td>{{ t.tecnico or "—" }}</td>
+            <td class="nowrap">$ {{ "%.0f"|format(t.costo) }}</td>
+            <td>
+                <form method="post" action="{{ url_for('cambiar_estado', ticket_id=t.id) }}">
+                    <select name="estado" onchange="this.form.submit()" class="estado-{{ t.estado|replace(' ', '-')|lower }}">
+                        {% for estado in estados %}
+                            <option {{ 'selected' if estado == t.estado }}>{{ estado }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="{{ url_for('eliminar_ticket', ticket_id=t.id) }}"
+                      onsubmit="return confirm('¿Eliminar el ticket #{{ t.id }}?')">
+                    <button class="peligro">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="9">No hay tickets.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

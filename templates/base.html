@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Soporte Técnico{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🛠️ Soporte Técnico</h1>
+        <nav>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('tickets') }}">Tickets</a>
+            <a href="{{ url_for('nuevo_ticket') }}">Nuevo ticket</a>
+            <a href="{{ url_for('clientes') }}">Clientes</a>
+            <a href="{{ url_for('reportes') }}">Reportes SQL</a>
+            <a href="{{ url_for('consulta') }}">Consulta libre</a>
+        </nav>
+    </header>
+
+    <main>
+        {% for categoria, mensaje in get_flashed_messages(with_categories=true) %}
+            <p class="flash {{ categoria }}">{{ mensaje }}</p>
+        {% endfor %}
+
+        {% block contenido %}{% endblock %}
+    </main>
+</body>
+</html>
