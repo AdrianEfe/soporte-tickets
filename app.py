@@ -190,7 +190,7 @@ def equipos():
         modelo = request.form.get("modelo", "").strip() or None
         nro_serie = request.form.get("nro_serie", "").strip() or None
         if not cliente_id or tipo not in TIPOS_EQUIPO or not marca:
-            flash("El dueño, el tipo y la marca son obligatorios.", "error")
+            flash("El cliente, el tipo y la marca son obligatorios.", "error")
         else:
             try:
                 db.execute(

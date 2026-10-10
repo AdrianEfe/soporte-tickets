@@ -5,7 +5,7 @@
 
 <form method="post" class="formulario en-linea">
     <select name="cliente_id" required>
-        <option value="">— Dueño —</option>
+        <option value="">— Cliente —</option>
         {% for c in clientes %}
             <option value="{{ c.id }}">{{ c.nombre }}</option>
         {% endfor %}
@@ -24,7 +24,7 @@
 
 <table>
     <thead>
-        <tr><th>#</th><th>Dueño</th><th>Tipo</th><th>Marca</th><th>Modelo</th><th>N.º de serie</th></tr>
+        <tr><th>#</th><th>Cliente</th><th>Tipo</th><th>Marca</th><th>Modelo</th><th>N.º de serie</th></tr>
     </thead>
     <tbody>
     {% for e in equipos %}
