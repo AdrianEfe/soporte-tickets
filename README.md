@@ -12,6 +12,7 @@ También tiene reportes hechos con consultas SQL y una página para ejecutar con
 - **Clientes:** listado y alta de clientes.
 - **Reportes SQL:** 8 consultas predefinidas (WHERE, ORDER BY, LIKE, COUNT, SUM, GROUP BY, JOIN), cada una con su código SQL visible.
 - **Consulta libre:** ejecutar cualquier `SELECT` sobre la base con una conexión de solo lectura.
+- **Arquitectura:** documentación del sistema dentro de la app: tecnologías, diagrama de funcionamiento, modelo de datos con la cantidad de registros de cada tabla, altas/bajas/modificaciones y seguridad.
 
 ## Tecnologías (stack)
 

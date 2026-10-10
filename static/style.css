@@ -96,3 +96,22 @@ pre, textarea.sql {
 textarea.sql { width: 100%; display: block; margin-bottom: 10px; }
 
 .nowrap { white-space: nowrap; }
+
+/* Página de arquitectura */
+.doc {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.doc h3 { margin-top: 0; color: #1e3a5f; }
+.doc table { margin: 12px 0; }
+.doc table.angosta { width: auto; }
+.doc code { background: #e8eef6; padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+svg.diagrama { width: 100%; max-width: 760px; height: auto; display: block; margin: 12px auto; }
+svg.diagrama text { fill: #1f2937; font-family: system-ui, "Segoe UI", sans-serif; }
+svg.diagrama .sub { fill: #64748b; font-size: 12px; }
+svg.diagrama .fk { fill: #2563eb; font-weight: 700; }
+svg.diagrama .caja { fill: #eef2f7; stroke: #94a3b8; stroke-width: 1.5; }
+svg.diagrama .linea { stroke: #64748b; stroke-width: 2; fill: none; }

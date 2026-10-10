@@ -190,6 +190,18 @@ def reportes():
     return render_template("reportes.html", reportes=resultados)
 
 
+@app.route("/arquitectura")
+def arquitectura():
+    """Documentación del sistema: stack, arquitectura y modelo de datos."""
+    db = get_db()
+    # Los nombres de tabla son fijos (no vienen del usuario), por eso se
+    # pueden armar en el texto de la consulta sin riesgo de inyección SQL.
+    conteos = {}
+    for tabla in ["clientes", "equipos", "tecnicos", "tickets"]:
+        conteos[tabla] = db.execute(f"SELECT COUNT(*) FROM {tabla}").fetchone()[0]
+    return render_template("arquitectura.html", conteos=conteos)
+
+
 @app.route("/consulta", methods=["GET", "POST"])
 def consulta():
     """Permite escribir un SELECT libre. La conexión es de SOLO LECTURA,

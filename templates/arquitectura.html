@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block titulo %}Arquitectura{% endblock %}
+{% block contenido %}
+<h2>Arquitectura del sistema</h2>
+
+<section class="doc">
+    <h3>Descripción</h3>
+    <p>Sistema web para gestionar un servicio de soporte técnico informático. Registra los
+    <b>clientes</b>, sus <b>equipos</b>, los <b>técnicos</b> y cada orden de reparación
+    (<b>ticket</b>), con su problema, estado y costo.</p>
+</section>
+
+<section class="doc">
+    <h3>Tecnologías</h3>
+    <table>
+        <thead><tr><th>Capa</th><th>Tecnología</th><th>Función</th></tr></thead>
+        <tbody>
+            <tr><td>Presentación</td><td>HTML + CSS (plantillas Jinja2)</td><td>Las páginas que ve el usuario en el navegador</td></tr>
+            <tr><td>Lógica</td><td>Python + Flask</td><td>Recibe los pedidos, valida los datos y consulta la base</td></tr>
+            <tr><td>Datos</td><td>SQLite</td><td>Base de datos relacional guardada en el archivo <code>soporte.db</code></td></tr>
+            <tr><td>Versiones</td><td>Git + GitHub</td><td>Historial de cambios y publicación del código</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="doc">
+    <h3>Cómo funciona</h3>
+    <svg class="diagrama" viewBox="0 0 680 190" role="img" aria-label="Navegador, Flask y SQLite">
+        <defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker></defs>
+        <rect class="caja" x="10" y="55" width="150" height="80" rx="10"/>
+        <text x="85" y="90" text-anchor="middle" font-weight="700">🌐 Navegador</text>
+        <text x="85" y="112" text-anchor="middle" class="sub">(usuario)</text>
+        <rect class="caja" x="265" y="55" width="150" height="80" rx="10"/>
+        <text x="340" y="90" text-anchor="middle" font-weight="700">🐍 Flask</text>
+        <text x="340" y="112" text-anchor="middle" class="sub">app.py</text>
+        <rect class="caja" x="520" y="55" width="150" height="80" rx="10"/>
+        <text x="595" y="90" text-anchor="middle" font-weight="700">🗄️ SQLite</text>
+        <text x="595" y="112" text-anchor="middle" class="sub">soporte.db</text>
+        <line class="linea" x1="160" y1="75" x2="263" y2="75" marker-end="url(#flecha)"/>
+        <text x="212" y="45" text-anchor="middle" font-size="13">① pedido HTTP</text>
+        <line class="linea" x1="415" y1="75" x2="518" y2="75" marker-end="url(#flecha)"/>
+        <text x="467" y="45" text-anchor="middle" font-size="13">② consulta SQL</text>
+        <line class="linea" x1="518" y1="118" x2="417" y2="118" marker-end="url(#flecha)"/>
+        <text x="467" y="160" text-anchor="middle" font-size="13">③ filas</text>
+        <line class="linea" x1="263" y1="118" x2="162" y2="118" marker-end="url(#flecha)"/>
+        <text x="212" y="160" text-anchor="middle" font-size="13">④ página HTML</text>
+    </svg>
+    <ol>
+        <li>El navegador pide una página, por ejemplo <code>/tickets</code>.</li>
+        <li>Flask ejecuta la función asociada a esa ruta, que consulta la base con SQL.</li>
+        <li>La base devuelve las filas pedidas.</li>
+        <li>Flask completa una plantilla HTML con esos datos y la devuelve al navegador.</li>
+    </ol>
+    <p>Es una arquitectura <b>cliente-servidor de tres capas</b>: presentación, lógica y datos.</p>
+</section>
+
+<section class="doc">
+    <h3>Modelo de datos</h3>
+    <svg class="diagrama" viewBox="0 0 760 250" role="img" aria-label="Modelo entidad relación">
+        <g font-size="13">
+            <rect class="caja" x="5" y="30" width="160" height="150" rx="8"/>
+            <text x="85" y="55" text-anchor="middle" font-weight="700">CLIENTES</text>
+            <line x1="5" y1="65" x2="165" y2="65" stroke="#94a3b8"/>
+            <text x="18" y="88">🔑 id</text><text x="18" y="110">nombre</text><text x="18" y="132">telefono</text><text x="18" y="154">email</text>
+
+            <rect class="caja" x="200" y="30" width="160" height="195" rx="8"/>
+            <text x="280" y="55" text-anchor="middle" font-weight="700">EQUIPOS</text>
+            <line x1="200" y1="65" x2="360" y2="65" stroke="#94a3b8"/>
+            <text x="213" y="88">🔑 id</text><text x="213" y="110" class="fk">🔗 cliente_id</text>
+            <text x="213" y="132">tipo</text><text x="213" y="154">marca</text><text x="213" y="176">modelo</text><text x="213" y="198">nro_serie</text>
+
+            <rect class="caja" x="395" y="30" width="160" height="195" rx="8"/>
+            <text x="475" y="55" text-anchor="middle" font-weight="700">TICKETS</text>
+            <line x1="395" y1="65" x2="555" y2="65" stroke="#94a3b8"/>
+            <text x="408" y="88">🔑 id</text><text x="408" y="110" class="fk">🔗 equipo_id</text>
+            <text x="408" y="132" class="fk">🔗 tecnico_id</text>
+            <text x="408" y="154">fecha_ingreso</text><text x="408" y="176">problema</text><text x="408" y="198">estado · costo</text>
+
+            <rect class="caja" x="595" y="30" width="160" height="120" rx="8"/>
+            <text x="675" y="55" text-anchor="middle" font-weight="700">TECNICOS</text>
+            <line x1="595" y1="65" x2="755" y2="65" stroke="#94a3b8"/>
+            <text x="608" y="88">🔑 id</text><text x="608" y="110">nombre</text><text x="608" y="132">especialidad</text>
+
+            <line class="linea" x1="165" y1="100" x2="200" y2="100"/>
+            <text x="171" y="93" font-weight="700">1</text><text x="187" y="93" font-weight="700">N</text>
+            <line class="linea" x1="360" y1="100" x2="395" y2="100"/>
+            <text x="366" y="93" font-weight="700">1</text><text x="382" y="93" font-weight="700">N</text>
+            <line class="linea" x1="555" y1="100" x2="595" y2="100"/>
+            <text x="561" y="93" font-weight="700">N</text><text x="582" y="93" font-weight="700">1</text>
+        </g>
+        <text x="380" y="245" text-anchor="middle" class="sub">🔑 clave primaria · 🔗 clave foránea</text>
+    </svg>
+    <ul>
+        <li>Un <b>cliente</b> tiene muchos <b>equipos</b>; cada equipo pertenece a un solo cliente (1 a N).</li>
+        <li>Un <b>equipo</b> puede tener muchos <b>tickets</b> a lo largo del tiempo (1 a N).</li>
+        <li>Un <b>técnico</b> atiende muchos <b>tickets</b>; un ticket puede no tener técnico asignado todavía.</li>
+    </ul>
+    <p>Las relaciones se implementan con <b>claves foráneas</b>: la base no permite que un registro apunte a otro que no existe.</p>
+
+    <table class="angosta">
+        <thead><tr><th>Tabla</th><th>Registros actuales</th></tr></thead>
+        <tbody>
+        {% for tabla, cantidad in conteos.items() %}
+            <tr><td>{{ tabla }}</td><td>{{ cantidad }}</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="doc">
+    <h3>Altas, bajas y modificaciones</h3>
+    <table>
+        <thead><tr><th>Operación</th><th>Dónde</th><th>SQL</th></tr></thead>
+        <tbody>
+            <tr><td>Alta</td><td>Nuevo ticket · Clientes</td><td><code>INSERT INTO tickets (...) VALUES (?, ?, ?, ?)</code></td></tr>
+            <tr><td>Baja</td><td>Tickets → Eliminar</td><td><code>DELETE FROM tickets WHERE id = ?</code></td></tr>
+            <tr><td>Modificación</td><td>Tickets → cambiar estado</td><td><code>UPDATE tickets SET estado = ? WHERE id = ?</code></td></tr>
+            <tr><td>Consulta</td><td>Tickets · Reportes SQL · Consulta libre</td><td><code>SELECT ...</code></td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="doc">
+    <h3>Seguridad</h3>
+    <ul>
+        <li><b>Consultas parametrizadas:</b> los datos que escribe el usuario se pasan con <code>?</code>, separados del código SQL. Así se evita la inyección SQL.</li>
+        <li><b>Consulta libre en solo lectura:</b> esa página abre la base en modo de solo lectura, por lo que no se puede modificar ni borrar nada desde ahí.</li>
+        <li><b>Validaciones:</b> la base exige campos obligatorios (<code>NOT NULL</code>), emails sin repetir (<code>UNIQUE</code>), estados válidos y costos no negativos (<code>CHECK</code>).</li>
+    </ul>
+</section>
+{% endblock %}
