@@ -17,6 +17,7 @@ DB_PATH = BASE_DIR / "soporte.db"
 SCHEMA_PATH = BASE_DIR / "schema.sql"
 
 ESTADOS = ["Abierto", "En proceso", "Resuelto"]
+TIPOS_EQUIPO = ["PC escritorio", "Notebook", "Impresora", "Monitor"]  # los mismos del CHECK en schema.sql
 
 app = Flask(__name__)
 app.secret_key = "clave-de-desarrollo"  # necesaria para los mensajes flash
@@ -177,6 +178,39 @@ def clientes():
         "SELECT id, nombre, telefono, email FROM clientes ORDER BY nombre"
     ).fetchall()
     return render_template("clientes.html", clientes=filas)
+
+
+@app.route("/equipos", methods=["GET", "POST"])
+def equipos():
+    db = get_db()
+    if request.method == "POST":
+        cliente_id = request.form.get("cliente_id")
+        tipo = request.form.get("tipo")
+        marca = request.form.get("marca", "").strip()
+        modelo = request.form.get("modelo", "").strip() or None
+        nro_serie = request.form.get("nro_serie", "").strip() or None
+        if not cliente_id or tipo not in TIPOS_EQUIPO or not marca:
+            flash("El dueño, el tipo y la marca son obligatorios.", "error")
+        else:
+            try:
+                db.execute(
+                    "INSERT INTO equipos (cliente_id, tipo, marca, modelo, nro_serie) VALUES (?, ?, ?, ?, ?)",
+                    (cliente_id, tipo, marca, modelo, nro_serie),
+                )
+                db.commit()
+                flash("Equipo agregado.", "ok")
+            except sqlite3.IntegrityError:
+                flash("Ya existe un equipo con ese número de serie.", "error")
+        return redirect(url_for("equipos"))
+
+    filas = db.execute("""
+        SELECT equipos.id, equipos.tipo, equipos.marca, equipos.modelo, equipos.nro_serie, clientes.nombre
+        FROM equipos
+        JOIN clientes ON equipos.cliente_id = clientes.id
+        ORDER BY clientes.nombre
+    """).fetchall()
+    clientes = db.execute("SELECT id, nombre FROM clientes ORDER BY nombre").fetchall()
+    return render_template("equipos.html", equipos=filas, clientes=clientes, tipos=TIPOS_EQUIPO)
 
 
 @app.route("/reportes")

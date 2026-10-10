@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}Equipos{% endblock %}
+{% block contenido %}
+<h2>Equipos</h2>
+
+<form method="post" class="formulario en-linea">
+    <select name="cliente_id" required>
+        <option value="">— Dueño —</option>
+        {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.nombre }}</option>
+        {% endfor %}
+    </select>
+    <select name="tipo" required>
+        <option value="">— Tipo —</option>
+        {% for tipo in tipos %}
+            <option>{{ tipo }}</option>
+        {% endfor %}
+    </select>
+    <input name="marca" placeholder="Marca" required>
+    <input name="modelo" placeholder="Modelo">
+    <input name="nro_serie" placeholder="N.º de serie">
+    <button>Agregar equipo</button>
+</form>
+
+<table>
+    <thead>
+        <tr><th>#</th><th>Dueño</th><th>Tipo</th><th>Marca</th><th>Modelo</th><th>N.º de serie</th></tr>
+    </thead>
+    <tbody>
+    {% for e in equipos %}
+        <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.tipo }}</td>
+            <td>{{ e.marca }}</td>
+            <td>{{ e.modelo or "—" }}</td>
+            <td>{{ e.nro_serie or "—" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
